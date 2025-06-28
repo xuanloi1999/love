@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trái Tim Cute ❤️</title>
+    <style>
+      body {
+        margin: 0;
+        background: radial-gradient(circle, #ffe0ec, #ffd6e0);
+        overflow: hidden;
+        height: 100vh;
+        font-family: "Segoe UI", sans-serif;
+        position: relative;
+      }
+
+      /* Trái tim lớn SVG ở trung tâm */
+      #bigHeart {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        width: 120px;
+        height: 120px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      #bigHeart path {
+        transition: fill 0.3s ease;
+      }
+
+      /* Quote & lời chúc */
+      .text-container {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        color: #ff4d6d;
+      }
+
+      .quote {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        animation: fadeInUp 2s ease;
+      }
+
+      .good-night {
+        font-size: 18px;
+        color: #ff3399;
+        animation: fadeInUp 3s ease;
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Trái tim nhỏ */
+      .small-heart {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: pink;
+        transform: rotate(45deg);
+        opacity: 0.8;
+        animation: flyToCenter 3s ease-in forwards;
+      }
+
+      .small-heart::before,
+      .small-heart::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: pink;
+        border-radius: 50%;
+      }
+
+      .small-heart::before {
+        top: -10px;
+        left: 0;
+      }
+
+      .small-heart::after {
+        left: -10px;
+        top: 0;
+      }
+
+      @keyframes flyToCenter {
+        to {
+          top: 35%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Trái tim lớn SVG -->
+    <svg id="bigHeart" viewBox="0 0 32 29.6">
+      <path
+        id="heartPath"
+        d="M23.6,0c-3.4,0-6.4,2.3-7.6,5.6C14.8,2.3,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4
+      c0,9.2,16,21.2,16,21.2s16-12,16-21.2C32,3.8,28.2,0,23.6,0z"
+        fill="rgba(255, 0, 0, 0.2)"
+      />
+    </svg>
+
+    <!-- Quote và lời chúc -->
+    <div class="text-container">
+      <div class="quote">"Tao cute vl ❤ hí hí"</div>
+      <div class="good-night">Chúc em ngủ ngon 😴💤</div>
+    </div>
+
+    <script>
+      let heartCount = 0;
+      const maxHearts = 50;
+      const heartPath = document.getElementById("heartPath");
+
+      function updateBigHeartColor() {
+        const opacity = Math.min(0.2 + (heartCount / maxHearts) * 0.8, 1);
+        heartPath.setAttribute("fill", `rgba(255, 0, 0, ${opacity})`);
+      }
+
+      function createSmallHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("small-heart");
+
+        const side = Math.floor(Math.random() * 4);
+        const buffer = 50;
+        let top, left;
+
+        switch (side) {
+          case 0:
+            top = -buffer;
+            left = Math.random() * window.innerWidth;
+            break;
+          case 1:
+            top = Math.random() * window.innerHeight;
+            left = window.innerWidth + buffer;
+            break;
+          case 2:
+            top = window.innerHeight + buffer;
+            left = Math.random() * window.innerWidth;
+            break;
+          case 3:
+            top = Math.random() * window.innerHeight;
+            left = -buffer;
+            break;
+        }
+
+        heart.style.top = `${top}px`;
+        heart.style.left = `${left}px`;
+
+        document.body.appendChild(heart);
+
+        heart.addEventListener("animationend", () => {
+          heart.remove();
+          heartCount++;
+          updateBigHeartColor();
+        });
+      }
+
+      // Thả tim tự động
+      setInterval(createSmallHeart, 300);
+    </script>
+  </body>
+</html>
